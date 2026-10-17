@@ -1,0 +1,6 @@
+{
+  "name": "Ireme College - Ikizamini cya Provisoire & Amategeko y'Umuhanda",
+  "description": "Urubuga rwizewe rwo kwitegura ikizamini cy'uruhushya rw'agateganyo (Provisoire) n'amategeko y'umuhanda mu Rwanda. Isuzume, wige ibyapa, kandi utsindire ku nshuro ya mbere.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
