@@ -23,6 +23,7 @@ import { AllQuestionsModal } from './components/AllQuestionsModal';
 import { UserAuthModal } from './components/UserAuthModal';
 import { WhatsAppSupport } from './components/WhatsAppSupport';
 import { Footer } from './components/Footer';
+import { ContactModal } from './components/ContactModal';
 
 export default function App() {
   // 1. Language state (defaults to Kinyarwanda as on isuzume.rw)
@@ -97,9 +98,10 @@ export default function App() {
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isAllQuestionsOpen, setIsAllQuestionsOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [pricingDefaultPlan, setPricingDefaultPlan] = useState<'daily' | 'weekly' | 'monthly' | 'single_exam'>('daily');
 
-  // Direct URL Hash Navigation Support (#exam, #questions, #ibizamini)
+  // Direct URL Hash Navigation Support (#exam, #questions, #ibizamini, #contact)
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.toLowerCase();
@@ -113,6 +115,8 @@ export default function App() {
       } else if (hash === '#amasomo' || hash === '#lessons' || hash === '#ibibazo-bya-polisi' || hash === '#pdf-questions') {
         setIsExamActive(false);
         setCurrentTab('lessons');
+      } else if (hash === '#contact' || hash === '#twandikire' || hash === '#support') {
+        setIsContactOpen(true);
       }
     };
 
@@ -189,6 +193,7 @@ export default function App() {
         onStartQuickExam={() => handleStartExam()}
         onOpenPricing={() => setIsPricingOpen(true)}
         onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenContact={() => setIsContactOpen(true)}
         userProfile={userProfile}
       />
 
@@ -446,7 +451,10 @@ export default function App() {
       </main>
 
       {/* Floating WhatsApp Support */}
-      <WhatsAppSupport language={language} />
+      <WhatsAppSupport 
+        language={language} 
+        onOpenContactModal={() => setIsContactOpen(true)}
+      />
 
       {/* All Questions Bank Modal */}
       <AllQuestionsModal
@@ -483,6 +491,13 @@ export default function App() {
         examRecords={examRecords}
       />
 
+      {/* Official Contact Modal (WhatsApp 0786922843, Call 07227118102, francoisshyirakumutima@gmail.com) */}
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        language={language}
+      />
+
       {/* Footer */}
       {!isExamActive && (
         <Footer
@@ -491,6 +506,7 @@ export default function App() {
             setCurrentTab(tab);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          onOpenContactModal={() => setIsContactOpen(true)}
         />
       )}
 

@@ -6,9 +6,10 @@ import { TRANSLATIONS } from '../data/translations';
 interface FooterProps {
   language: Language;
   onNavigateTab: (tab: string) => void;
+  onOpenContactModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ language, onNavigateTab }) => {
+export const Footer: React.FC<FooterProps> = ({ language, onNavigateTab, onOpenContactModal }) => {
   const t = TRANSLATIONS[language];
 
   return (
@@ -102,6 +103,70 @@ export const Footer: React.FC<FooterProps> = ({ language, onNavigateTab }) => {
                 </a>
               </li>
             </ul>
+          </div>
+
+          {/* Contact Us - Twandikire */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span>{language === 'rw' ? 'Twavugishe / Contact Us' : 'Contact Us'}</span>
+            </h4>
+            <div className="space-y-2.5 text-xs text-slate-300">
+              {/* WhatsApp */}
+              <a 
+                href="https://wa.me/250786922843" 
+                target="_blank" 
+                rel="noreferrer"
+                className="flex items-center gap-2 hover:text-emerald-400 transition-colors group"
+              >
+                <div className="w-5 h-5 rounded-md bg-emerald-600/30 text-emerald-400 flex items-center justify-center shrink-0">
+                  <Phone className="w-3 h-3" />
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-400">WhatsApp:</span>
+                  <span className="font-mono font-bold text-white group-hover:text-emerald-300">0786922843</span>
+                </div>
+              </a>
+
+              {/* Call */}
+              <a 
+                href="tel:07227118102"
+                className="flex items-center gap-2 hover:text-sky-400 transition-colors group"
+              >
+                <div className="w-5 h-5 rounded-md bg-sky-600/30 text-sky-400 flex items-center justify-center shrink-0">
+                  <Phone className="w-3 h-3" />
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-400">Guhamagara (Call):</span>
+                  <span className="font-mono font-bold text-white group-hover:text-sky-300">07227118102</span>
+                </div>
+              </a>
+
+              {/* Email */}
+              <a 
+                href="mailto:francoisshyirakumutima@gmail.com"
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors group"
+              >
+                <div className="w-5 h-5 rounded-md bg-amber-600/30 text-amber-400 flex items-center justify-center shrink-0">
+                  <span className="font-black text-[11px]">@</span>
+                </div>
+                <div className="overflow-hidden">
+                  <span className="block text-[10px] text-slate-400">Email:</span>
+                  <span className="font-mono font-bold text-white text-[11px] truncate group-hover:text-amber-300 block">
+                    francoisshyirakumutima@gmail.com
+                  </span>
+                </div>
+              </a>
+
+              {onOpenContactModal && (
+                <button
+                  type="button"
+                  onClick={onOpenContactModal}
+                  className="w-full mt-1 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 hover:text-white font-bold py-1.5 px-3 rounded-lg text-[11px] border border-emerald-500/40 transition-all text-center cursor-pointer"
+                >
+                  {language === 'rw' ? '✉️ Ohereza Ubutumwa (Contact Form)' : '✉️ Send Message'}
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Emergency Helplines Rwanda */}

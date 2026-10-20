@@ -259,8 +259,89 @@ app.post('/api/pay/verify', (req: Request, res: Response) => {
   });
 });
 
+// In-memory contact messages registry for francoisshyirakumutima@gmail.com
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  recipient: string;
+  status: 'DELIVERED' | 'READ';
+  createdAt: number;
+}
+
+const contactMessagesDb = new Map<string, ContactMessage>();
+
 /**
- * 4. POST /api/exam/get-questions
+ * 4. POST /api/contact/send-message
+ * Sends a message to francoisshyirakumutima@gmail.com
+ */
+app.post('/api/contact/send-message', async (req: Request, res: Response) => {
+  try {
+    const { name, email, phone = '', subject = 'Ikibazo cyangwa Ubufasha kuri Ireme College', message } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, error: 'Amazina yawe arakenewe (Name is required).' });
+    }
+    if (!email || !email.trim() || !email.includes('@')) {
+      return res.status(400).json({ success: false, error: 'Email ifite agaciro irakenewe (Valid email is required).' });
+    }
+    if (!message || !message.trim()) {
+      return res.status(400).json({ success: false, error: 'Ubutumwa bwawe burakenewe (Message is required).' });
+    }
+
+    const messageId = `msg_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const newMsg: ContactMessage = {
+      id: messageId,
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      subject: subject.trim(),
+      message: message.trim(),
+      recipient: 'francoisshyirakumutima@gmail.com',
+      status: 'DELIVERED',
+      createdAt: Date.now(),
+    };
+
+    contactMessagesDb.set(messageId, newMsg);
+
+    console.log(`[CONTACT INBOX: francoisshyirakumutima@gmail.com] New message received from ${newMsg.name} (${newMsg.email}, tel: ${newMsg.phone}): "${newMsg.subject}" -> "${newMsg.message}"`);
+
+    return res.json({
+      success: true,
+      messageId,
+      recipient: 'francoisshyirakumutima@gmail.com',
+      whatsapp: '0786922843',
+      call: '07227118102',
+      createdAt: newMsg.createdAt,
+      message: `Ubutumwa bwawe bwoherejwe neza kuri francoisshyirakumutima@gmail.com! Tuzagusubiza vuba bishoboka.`,
+    });
+  } catch (error: any) {
+    console.error('Contact message error:', error);
+    return res.status(500).json({ success: false, error: 'Habaye ikosa mu kohereza ubutumwa. Ongera ugerageze.' });
+  }
+});
+
+/**
+ * 5. GET /api/contact/messages
+ * Retrieves recent messages sent to francoisshyirakumutima@gmail.com
+ */
+app.get('/api/contact/messages', (_req: Request, res: Response) => {
+  const messages = Array.from(contactMessagesDb.values()).sort((a, b) => b.createdAt - a.createdAt);
+  return res.json({
+    success: true,
+    recipient: 'francoisshyirakumutima@gmail.com',
+    whatsapp: '0786922843',
+    call: '07227118102',
+    total: messages.length,
+    messages,
+  });
+});
+
+/**
+ * 6. POST /api/exam/get-questions
  * STRICT SERVER ENFORCEMENT:
  * - If user does NOT have a valid payment token, returns ONLY the 2 basic free questions!
  * - If user HAS a valid verified payment token, returns all 20 questions!

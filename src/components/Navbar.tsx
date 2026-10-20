@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   ShieldCheck, BookOpen, Layers, Award, Sparkles, FileCheck, 
-  Menu, X, Car, Zap, User, Scale, Play 
+  Menu, X, Car, Zap, User, Scale, Play, MessageCircle 
 } from 'lucide-react';
 import { Language, UserProfile } from '../types';
 import { TRANSLATIONS } from '../data/translations';
@@ -14,6 +14,7 @@ interface NavbarProps {
   onStartQuickExam: () => void;
   onOpenPricing: () => void;
   onOpenAuth: () => void;
+  onOpenContact?: () => void;
   userProfile: UserProfile | null;
 }
 
@@ -25,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onStartQuickExam,
   onOpenPricing,
   onOpenAuth,
+  onOpenContact,
   userProfile,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -45,14 +47,52 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       
       {/* Top micro bar for slogan & contact */}
-      <div className="bg-slate-900 text-slate-300 text-[11px] py-1 px-4 sm:px-8 flex items-center justify-between border-b border-slate-800">
+      <div className="bg-slate-950 text-slate-300 text-[11px] py-1.5 px-4 sm:px-8 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <span className="font-extrabold text-amber-400 uppercase tracking-wider">Kora rimwe Utsinde! 🇷🇼</span>
           <span className="hidden md:inline text-slate-400">| Urubuga rwizewe rwo kwitegura Ikizamini cya Provisoire</span>
         </div>
 
-        <div className="flex items-center gap-4">
-          <span className="hidden sm:inline text-slate-400 font-mono">WhatsApp: +250 788 889 000</span>
+        {/* Official Contact Badges */}
+        <div className="flex items-center gap-3">
+          {/* WhatsApp */}
+          <a
+            href="https://wa.me/250786922843"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1 font-mono font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+            title="Vugana natwe kuri WhatsApp"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>WA: 0786922843</span>
+          </a>
+
+          {/* Call */}
+          <a
+            href="tel:07227118102"
+            className="hidden sm:flex items-center gap-1 font-mono font-bold text-sky-400 hover:text-sky-300 transition-colors"
+            title="Hamagara ako kanya"
+          >
+            <span>Tel: 07227118102</span>
+          </a>
+
+          {/* Email / Contact Button */}
+          {onOpenContact ? (
+            <button
+              onClick={onOpenContact}
+              className="hidden lg:flex items-center gap-1 text-[10px] bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded text-amber-300 border border-slate-700 cursor-pointer"
+            >
+              <span>✉️ francoisshyirakumutima@gmail.com</span>
+            </button>
+          ) : (
+            <a
+              href="mailto:francoisshyirakumutima@gmail.com"
+              className="hidden lg:flex items-center gap-1 text-[10px] bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded text-amber-300 border border-slate-700"
+            >
+              <span>✉️ francoisshyirakumutima@gmail.com</span>
+            </a>
+          )}
+
           {/* Language Switcher */}
           <div className="flex items-center bg-slate-800 p-0.5 rounded-md border border-slate-700 text-[10px] font-bold">
             {(['rw', 'en', 'fr'] as Language[]).map((lang) => (
@@ -136,6 +176,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>{userProfile?.isPro ? 'PRO Active' : 'Amapaki (PRO)'}</span>
             </button>
 
+            {/* Contact Support Button */}
+            {onOpenContact && (
+              <button
+                onClick={onOpenContact}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 text-slate-700 hover:text-emerald-800 text-xs font-bold transition-all cursor-pointer"
+                title="Twavugishe kuri WhatsApp 0786922843 cyangwa Call 07227118102"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <span>{language === 'rw' ? 'Twandikire' : 'Contact'}</span>
+              </button>
+            )}
+
             {/* User Profile / Login */}
             <button
               onClick={onOpenAuth}
@@ -203,6 +255,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
           
           <div className="pt-3 border-t border-slate-100 space-y-2">
+            {onOpenContact && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenContact();
+                }}
+                className="w-full flex items-center justify-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold py-2.5 rounded-xl text-xs"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <span>Twandikire (WA: 0786922843 • Tel: 07227118102)</span>
+              </button>
+            )}
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

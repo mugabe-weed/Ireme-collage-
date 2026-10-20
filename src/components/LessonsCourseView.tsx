@@ -122,20 +122,20 @@ export const LessonsCourseView: React.FC<LessonsCourseViewProps> = ({
 
           <h3 className="text-xl sm:text-2xl font-black text-white">
             {language === 'rw' 
-              ? '🔗 Fungura Ibibazo Nyabyo bya Polisi y\'u Rwanda (PDF Archive)' 
-              : '🔗 Access Official Police Questions Archive (PDF Collection)'}
+              ? '🔗 Fungura Ibibazo Nyabyo bya Polisi y\'u Rwanda & Upload Questions' 
+              : '🔗 Access Official Police Questions Archive & Upload Questions'}
           </h3>
 
           <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
             {language === 'rw'
-              ? 'Kanda kuri iyi link urebe ibibazo byose nyabyo byo mu gitabo cy\'ikizamini cya Polisi y\'u Rwanda (bifite ibisubizo by\'ukuri byemejwe mu mutuku nk\'uko biri muri PDF). Ushobora kubyiga, kubyitoza no kwisuzuma!'
-              : 'Click this link to browse all verified Rwanda National Police theory questions with the red-marked authentic answers directly from the official PDF exam document.'}
+              ? 'Kanda kuri iyi link urebe ibibazo byose nyabyo byo mu gitabo cy\'ikizamini cya Polisi y\'u Rwanda (bifite ibisubizo by\'ukuri byemejwe mu mutuku nk\'uko biri muri PDF). Ushobora no gushyiramo ibindi bibazo bishya (Upload Questions)!'
+              : 'Click this link to browse all verified Rwanda National Police theory questions with authentic red-marked answers, plus an integrated tool to upload or import your own questions.'}
           </p>
 
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1 text-[11px] font-bold text-emerald-300">
-            <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">✓ Ibibazo 230+ Byemejwe</span>
+            <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">✓ Ibibazo 230+ Byatanzwe</span>
             <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">✓ Ibisubizo by'Ukuri mu Mutuku</span>
-            <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">✓ Kwiga & Kwisuzuma</span>
+            <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">✓ Shyiramo Ibibazo (Upload)</span>
           </div>
         </div>
 
@@ -149,7 +149,7 @@ export const LessonsCourseView: React.FC<LessonsCourseViewProps> = ({
           className="bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-6 py-4 rounded-2xl text-xs sm:text-sm shadow-xl shadow-emerald-950/60 shrink-0 cursor-pointer flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95 ring-2 ring-emerald-400/40 relative z-10"
         >
           <FileText className="w-5 h-5 text-slate-950" />
-          <span>{language === 'rw' ? '🔗 Fungura Ibibazo bya Polisi' : '🔗 Open PDF Questions'}</span>
+          <span>{language === 'rw' ? '🔗 Fungura Ibibazo & Upload' : '🔗 Open Questions & Upload'}</span>
           <ArrowRight className="w-4 h-4 text-slate-950" />
         </button>
       </section>
